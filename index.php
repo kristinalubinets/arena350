@@ -1,0 +1,1 @@
+<?php header("Location: /arena350/signup.php"); ?>
