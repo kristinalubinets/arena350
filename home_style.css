@@ -1,0 +1,75 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    background: ghostwhite;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: lightslategray;
+    display: flex;
+}
+/* Style the links inside the navigation bar */
+.topnav a {
+    color: black;
+    text-align: center;
+    padding: 10px 14px;
+    text-decoration: none;
+    font-size: 17px;
+}
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color: ghostwhite;
+    color: #005f5f;
+    cursor: pointer;
+}
+/* Add a color to the active/current link */
+.topnav .active {
+    background-color: #005f5f;
+    color: white;
+}
+
+.btn {
+    background-color: #005f5f;
+    padding: 14px 40px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 2px lightslategray;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    transition: .4s;
+}
+.btn:hover {
+    transition: .4s;
+    border: 1px solid white;
+    background-color: #fff;
+    color: #00BFA6;
+}
+
+.btn:active {
+    background-color: #87dbd0;
+    box-shadow: 4px 4px 12px #c5c5c5,
+    -4px -4px 12px #ffffff;
+}
+
+.logout {
+}
+
+.navbar-end {
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+}
+
+.container {
+    margin-top: 16px;
+    width: 600px;
+    display: flex;
+}
+
+svg {
+    height: 100%;
+}

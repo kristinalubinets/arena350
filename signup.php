@@ -39,16 +39,18 @@ mysqli_close($conn);
 <head>
     <meta charset="UTF-8">
     <title>To register for the Sport Arena pls type the info: </title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="home_style.css" />
 </head>
 
+<nav class="topnav">
+    <a  href="#">Home</a>
+    <a  class="active" href="#">IDK</a>
+    <a  href="#">Link</a>
+    <a  href="#">About</a>
+</nav>
+
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-offset-2">
-            <div class="page-header">
-                <h2>To register for the Sport Arena pls type the info:</h2>
-            </div>
+
             <p>Please fill all fields in the form</p>
             <form action="" method="post">
                 <div class="form-group ">

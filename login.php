@@ -13,10 +13,7 @@ function login($username, $password, $connection)
     $sql = "SELECT id, username, password FROM users WHERE username = ?";
     $succeeded = false;
 
-    echo "in login";
-
     if ($stmt = $connection->prepare($sql)) {
-        echo "preparing mysql statement";
 
         // Bind variables to the prepared statement as parameters ?
         mysqli_stmt_bind_param($stmt, "s", $param_username);
@@ -26,19 +23,15 @@ function login($username, $password, $connection)
 
         // Attempt to execute the prepared statement
         if (mysqli_stmt_execute($stmt)) {
-            echo "executed mysql statement";
             // Store result
             mysqli_stmt_store_result($stmt);
 
             // Check if username exists, if yes then verify password
             if (mysqli_stmt_num_rows($stmt) == 1) {
-                echo "Found user";
                 // Bind result variables
                 mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
                 if (mysqli_stmt_fetch($stmt)) {
-                    echo "Fetched values into vars";
                     if (md5($password) === $hashed_password) {
-                        echo "Verified password matching";
                         // Password is correct, so start a new session
                         session_start();
 
@@ -106,17 +99,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+    <link rel="stylesheet" type="text/css" href="home_style.css"  />
     <style>
         body {
             font: 14px sans-serif;
         }
-
-        .wrapper {
-            width: 360px;
-            padding: 20px;
-        }
     </style>
+    <nav class="topnav">
+        <a class="nav-item nav-link active" href="#">Home</a>
+        <a class="nav-item nav-link" href="#">IDK</a>
+        <a class="nav-item nav-link" href="#">Link</a>
+        <a class="nav-item nav-link disabled" href="#">About</a>
+    </nav>
+
+
 </head>
 <body>
 <div class="wrapper">
