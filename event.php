@@ -4,6 +4,8 @@ require("db.php");
 
 // fetch event metadata on initial page load
 $queries = array();
+// QUERY_STRING everything after " ? " in URL
+// "parse"- to break a string into key value pairs
 parse_str($_SERVER['QUERY_STRING'], $queries);
 $event_id = null;
 
@@ -15,14 +17,18 @@ if (!empty($queries['name'])) {
     // send the prepared statement to the MySQL database to check if the query is valid
     // prepared statements, once validated, can be reused
     $stmt = $conn->prepare($sql);
-    // replace or assign the value of the $param_event_name string variable, to the first '?' parameter
+    // replace or assign/bind the value of the $param_event_name string variable, to the first '?' parameter
     // in the prepared statement
     $stmt->bind_param('s', $param_event_name);
     // assign $param_event_name variable to the query string 'name' parameter
     $param_event_name = $queries['name'];
 
     $stmt->execute();
+    // $result return all the rows from the query
     $result = $stmt->get_result();
+    // 'fetch'/get   - turns the rows into an array where each element corresponds to an individual row
+    // represented as an index array ( index array - use string keys as colums)
+    // $data - info about the event
     $data = $result->fetch_all(MYSQLI_ASSOC);
     if ($result->num_rows > 0) {
         $event_id = $data[0]['id'];
@@ -30,23 +36,44 @@ if (!empty($queries['name'])) {
 
 }
 
+echo var_dump($_SESSION);
+
 // submit add to cart
 // check for event id of tickets
-if (isset($_POST['event_id']) && !is_null($_POST['event_id'])) {
-    $stmt = $conn->prepare('SELECT count(*) FROM tickets WHERE event_id = ?');
+if (isset($_POST['event_id']) && !is_null($_POST['event_id']) && !isset($_POST['ticket_id'])) {
+    $stmt = $conn->prepare("SELECT id FROM tickets WHERE event_id = ? AND status='AVAILABLE' LIMIT 1");
+
     $stmt->bind_param('i', $_POST['event_id']);
     $stmt->execute();
     $result = $stmt->get_result();
+    // get all of the rows from query
     $row = $result->fetch_row();
+    // $row[0] because we gonna get the number of rows by 'count(*)' in query
+    $ticket_id = $row[0];
 
-    $ticket_quantity = $row[0];
-
-    // check that the amount of tickets > 0
-    if ($ticket_quantity > 0) {
+    // check that the amount of tickets > 0, the user allowed to get only one ticket
+    if ($result->num_rows > 0) {
         $user_id = $_SESSION['id'];
-        $conn->prepare('INSERT INTO user_tickets');
-    }
 
+        // associate the user with the added ticket
+        $stmt = $conn->prepare("INSERT INTO user_tickets (`user_id`, `ticket_id`, `status`) VALUES (?, ?, 'CART')");
+
+        if ($stmt) {
+            $stmt->bind_param('ii', $user_id, $ticket_id);
+            $stmt->execute();
+            echo "created user ticket association";
+
+            $sql = "UPDATE tickets SET tickets.status = 'CART' WHERE tickets.id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $ticket_id);
+            $stmt->execute();
+            echo "updated ticket status to available";
+        } else {
+            printf($conn->error);
+        }
+
+
+    }
 
     // assign ticket to the user with status CART
     // make an index array with a key as the event_id
@@ -60,8 +87,8 @@ if (isset($_POST['event_id']) && !is_null($_POST['event_id'])) {
 
 <body>
 <nav class="topnav">
-    <a href="/">Home</a>
-    <a href="/login.php">IDK</a>
+    <a href="/arena350/home.php">Home</a>
+    <a href="/arena350/login.php">IDK</a>
     <a href="#">Profile</a>
     <a href="#">About</a>
 
@@ -130,8 +157,8 @@ if ($data) : ?>
             </div>
             <div class="card-section">
                 <p><?= $row['description'] ?></p>
+                <!-- fill out $_POST global variable with event id at $_POST['event_id'] -->
                 <form method="post">
-                   <input type="hidden" name="ticket_id" value="<?=$row['id']?>">
                     <input type="hidden" name="event_id" value="<?=$event_id ?>">
                    <input type="submit" value="Add To Cart" class="btn">
                 </form>
