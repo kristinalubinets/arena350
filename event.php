@@ -83,7 +83,9 @@ if (isset($_POST['event_id']) && !is_null($_POST['event_id']) && !isset($_POST['
 ?>
 
 <html>
-<?php include('head.php') ?>
+<head>
+    <?php include('head.php') ?>
+</head>
 
 <body>
 <nav class="topnav">

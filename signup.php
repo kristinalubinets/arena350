@@ -20,7 +20,7 @@ if (isset($_POST['signup']) && !empty($_POST['signup'])) {
     }
 
 
-    if ($query = mysqli_query($conn, "INSERT INTO users(username, password) VALUES('".$email."', '".md5($password)."')")) {
+    if ($query = mysqli_query($conn, "INSERT INTO users(username, password) VALUES('" . $email . "', '" . md5($password) . "')")) {
         echo "Success"; // redirect on success
         $_POST = array();
         exit;
@@ -36,43 +36,47 @@ mysqli_close($conn);
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>To register for the Sport Arena pls type the info: </title>
-    <link rel="stylesheet" type="text/css" href="home_style.css" />
-</head>
+<?php include('head.php') ?>
 
 <nav class="topnav">
-    <a  href="#">Home</a>
-    <a  class="active" href="#">IDK</a>
-    <a  href="#">Link</a>
-    <a  href="#">About</a>
+    <a href="#">Home</a>
+    <a href="#">IDK</a>
+    <a href="#">Link</a>
+    <a href="#">About</a>
 </nav>
 
 <body>
-
-            <p>Please fill all fields in the form</p>
-            <form action="" method="post">
-                <div class="form-group ">
-                    <label>Email</label>
+<div class="container">
+    <div class="grid-container">
+        <form action="" method="post">
+            <div class="medium-6 cell">
+                <label>Email
                     <input type="email" name="email" class="form-control" value="" maxlength="30" required="">
-                    <span class="text-danger"><?php if (isset($email_error)) echo $email_error; ?></span>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
+                </label>
+                <span class="text-danger"><?php if (isset($email_error)) echo $email_error; ?></span>
+            </div>
+            <div class="medium-6 cell">
+                <label>Password
                     <input type="password" name="password" class="form-control" value="" maxlength="8" required="">
-                    <span class="text-danger"><?php if (isset($password_error)) echo $password_error; ?></span>
-                </div>
-                <div class="form-group">
-                    <label>Confirm Password</label>
+                </label>
+                <span class="text-danger"><?php if (isset($password_error)) echo $password_error; ?></span>
+            </div>
+            <div class="medium-6 cell">
+                <label>Confirm Password
                     <input type="password" name="cpassword" class="form-control" value="" maxlength="8" required="">
-                    <span class="text-danger"><?php if (isset($cpassword_error)) echo $cpassword_error; ?></span>
-                </div>
-                <input type="submit" class="btn btn-primary" name="signup" value="submit">
-                Already have a account?<a href="login.php" class="btn btn-default">Login</a>
-            </form>
-        </div>
+                </label>
+                <span class="text-danger"><?php if (isset($cpassword_error)) echo $cpassword_error; ?></span>
+            </div>
+            <div class="medium-6 cell">
+                <input type="submit" class="btn" name="signup" value="submit">
+                Already have a account?
+                <a href="login.php" class="btn">Login</a>
+            </div>
+        </form>
     </div>
+</div>
+</div>
+</div>
 </div>
 </body>
 </html>

@@ -97,55 +97,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-
-
-    <link rel="stylesheet" type="text/css" href="home_style.css"  />
-    <style>
-        body {
-            font: 14px sans-serif;
-        }
-    </style>
-    <nav class="topnav">
-        <a class="nav-item nav-link active" href="#">Home</a>
-        <a class="nav-item nav-link" href="#">IDK</a>
-        <a class="nav-item nav-link" href="#">Link</a>
-        <a class="nav-item nav-link disabled" href="#">About</a>
-    </nav>
-
-
+    <?php include("head.php") ?>
 </head>
+<nav class="topnav">
+    <a class="nav-item nav-link active" href="#">Home</a>
+    <a class="nav-item nav-link" href="#">IDK</a>
+    <a class="nav-item nav-link" href="#">Link</a>
+    <a class="nav-item nav-link disabled" href="#">About</a>
+</nav>
 <body>
-<div class="wrapper">
-    <h2>Login</h2>
-    <p>Please fill in your credentials to login.</p>
-
-    <?php
-    if (!empty($login_err)) {
-        echo '<div class="alert alert-danger">' . $login_err . '</div>';
-    }
-    ?>
-
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <div class="form-group">
-            <label>Username</label>
-            <input type="text" name="username"
-                   class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>"
-                   value="<?php echo $username; ?>">
-            <span class="invalid-feedback"><?php echo $username_err; ?></span>
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password"
-                   class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
-            <span class="invalid-feedback"><?php echo $password_err; ?></span>
-        </div>
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Login">
-        </div>
-        <p>Don't have an account? <a href="signup.php">Sign up now</a>.</p>
-    </form>
+<div class="container">
+    <div class="grid-container">
+        <h2>Login</h2>
+        <p>Please fill in your credentials to login.</p>
+        <?php
+        if (!empty($login_err)) {
+            echo '<div class="callout alert">' . $login_err . '</div>';
+        }
+        ?>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <div class="medium-6 cell">
+                <label>Username
+                    <input type="text" name="username"
+                           class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>"
+                           value="<?php echo $username; ?>">
+                </label>
+                <span class="invalid-feedback"><?php echo $username_err; ?></span>
+            </div>
+            <div class="medium-6 cell">
+                <label>Password
+                    <input type="password" name="password"
+                           class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
+                </label>
+                <span class="invalid-feedback"><?php echo $password_err; ?></span>
+            </div>
+            <div class="medium-6 cell">
+                <input type="submit" class="btn btn-primary" value="Login">
+            </div>
+            <p>Don't have an account? <a href="signup.php">Sign up now</a>.</p>
+        </form>
+    </div>
 </div>
 </body>
 </html>

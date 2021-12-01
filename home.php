@@ -33,10 +33,12 @@ $conn->close();
 ?>
 
 <html>
-<?php include('head.php') ?>
+<head>
+    <?php include('head.php') ?>
+</head>
 <body>
 <nav class="topnav">
-    <a class="active" href="/">Home</a>
+    <a class="active" href="/arena350/index.php">Home</a>
     <a href="/arena350/login.php">IDK</a>
     <a href="#">Profile</a>
     <a href="#">About</a>
