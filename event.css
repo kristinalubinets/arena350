@@ -1,0 +1,8 @@
+.cart-link > svg:after {
+    content:attr(value);
+    font-size:10px;
+    position: relative;
+    color: #ffffff;
+    left: -8px;
+    top: -10px;
+}

@@ -1,6 +1,8 @@
 <?php
 session_start(); // store user information once logged-in
 require("db.php");
+if (empty($_SESSION["loggedin"]))
+    header("location: login.php");
 
 // fetch event metadata on initial page load
 $queries = array();
@@ -27,64 +29,30 @@ if (!empty($queries['name'])) {
     // $result return all the rows from the query
     $result = $stmt->get_result();
     // 'fetch'/get   - turns the rows into an array where each element corresponds to an individual row
-    // represented as an index array ( index array - use string keys as colums)
+    // represented as an associative array (use string keys as colums)
     // $data - info about the event
     $data = $result->fetch_all(MYSQLI_ASSOC);
     if ($result->num_rows > 0) {
         $event_id = $data[0]['id'];
     }
-
 }
 
-echo var_dump($_SESSION);
-
-// submit add to cart
-// check for event id of tickets
-if (isset($_POST['event_id']) && !is_null($_POST['event_id']) && !isset($_POST['ticket_id'])) {
-    $stmt = $conn->prepare("SELECT id FROM tickets WHERE event_id = ? AND status='AVAILABLE' LIMIT 1");
-
-    $stmt->bind_param('i', $_POST['event_id']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    // get all of the rows from query
-    $row = $result->fetch_row();
-    // $row[0] because we gonna get the number of rows by 'count(*)' in query
-    $ticket_id = $row[0];
-
-    // check that the amount of tickets > 0, the user allowed to get only one ticket
-    if ($result->num_rows > 0) {
-        $user_id = $_SESSION['id'];
-
-        // associate the user with the added ticket
-        $stmt = $conn->prepare("INSERT INTO user_tickets (`user_id`, `ticket_id`, `status`) VALUES (?, ?, 'CART')");
-
-        if ($stmt) {
-            $stmt->bind_param('ii', $user_id, $ticket_id);
-            $stmt->execute();
-            echo "created user ticket association";
-
-            $sql = "UPDATE tickets SET tickets.status = 'CART' WHERE tickets.id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('i', $ticket_id);
-            $stmt->execute();
-            echo "updated ticket status to available";
-        } else {
-            printf($conn->error);
-        }
-
-
-    }
-
-    // assign ticket to the user with status CART
-    // make an index array with a key as the event_id
-    // with the values as another array of the ticket_id for that event in the $_SESSION
-
+// check if tickets for the event are available
+$stmt = $conn->prepare("SELECT id FROM tickets WHERE event_id = ? AND status='AVAILABLE' LIMIT 1");
+$stmt->bind_param('i', $event_id);
+$stmt->execute();
+$result = $stmt->get_result();
+// get all of the rows from query
+$row = $result->fetch_row();
+if (is_null($row)) {
+    echo "<div class='callout alert'>No more tickets for this event! Sorry, try again later.</div>";
 }
 ?>
 
 <html>
 <head>
     <?php include('head.php') ?>
+    <link rel="stylesheet" type="text/css" href="event.css"/>
 </head>
 
 <body>
@@ -95,8 +63,9 @@ if (isset($_POST['event_id']) && !is_null($_POST['event_id']) && !isset($_POST['
     <a href="#">About</a>
 
     <div class="navbar-end">
-        <a>
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        <a class="cart-link" href="/arena350/cart.php">
+<!--            <span>1</span>-->
+            <svg value=1 version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                  x="0px" y="0px"
                  viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 <g>
@@ -160,7 +129,7 @@ if ($data) : ?>
             <div class="card-section">
                 <p><?= $row['description'] ?></p>
                 <!-- fill out $_POST global variable with event id at $_POST['event_id'] -->
-                <form method="post">
+                <form action="add_to_cart.php" method="post">
                     <input type="hidden" name="event_id" value="<?=$event_id ?>">
                    <input type="submit" value="Add To Cart" class="btn">
                 </form>

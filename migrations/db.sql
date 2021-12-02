@@ -1,4 +1,5 @@
-CREATE TABLE `events` (
+DROP TABLE `events` IF EXISTS;
+CREATE TABLE IF NOT EXISTS `events` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
@@ -9,10 +10,10 @@ CREATE TABLE `events` (
   UNIQUE KEY `event_name_uniq_idx` (`name`),
   KEY `event_created_idx` (`created`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
-
 ALTER TABLE `events` ADD `image_url` TEXT AFTER `description`;
 
-CREATE TABLE `tickets` (
+DROP TABLE `tickets` IF EXISTS:
+CREATE TABLE IF NOT EXISTS `tickets` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `event_id` int(10) unsigned NOT NULL,
   `seat` varchar(50) DEFAULT NULL,
@@ -25,7 +26,8 @@ CREATE TABLE `tickets` (
   CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `users` (
+DROP TABLE `users` IF EXISTS:
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` varchar(225) NOT NULL,
@@ -34,7 +36,9 @@ CREATE TABLE `users` (
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb;
 
-CREATE TABLE `user_tickets` (
+
+DROP TABLE `user_tickets` IF EXISTS;
+CREATE TABLE IF NOT EXISTS `user_tickets` (
   `user_id` int(11) unsigned NOT NULL,
   `ticket_id` int(10) unsigned NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'AVAILABLE',
