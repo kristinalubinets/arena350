@@ -1,0 +1,11 @@
+.cart-link > span {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    color: #ffffff;
+    font-size: 10px;
+}
+
+.cart-link {
+    position: relative;
+}
