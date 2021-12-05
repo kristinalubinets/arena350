@@ -14,13 +14,15 @@
 
 <nav class="topnav">
     <a href="/arena350/home.php">Home</a>
-    <a href="/arena350/login.php">IDK</a>
     <a href="#">Profile</a>
     <a href="#">About</a>
 
     <div class="navbar-end">
         <a class="cart-link" href="/arena350/cart.php">
-            <span>1</span>
+
+            <?php if ($cart_item_count > 0) : ?>
+                <span><?=$cart_item_count?></span>
+            <?php endif; ?>
             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                  x="0px" y="0px"
                  viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">

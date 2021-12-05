@@ -23,13 +23,17 @@ if (isset($_POST['event_id']) && !is_null($_POST['event_id']) && !isset($_POST['
         $user_id = $_SESSION['id'];
 
         // associate the user with the added ticket
-        $stmt = $conn->prepare("INSERT INTO user_tickets (`user_id`, `ticket_id`, `status`) VALUES (?, ?, 'CART')");
+        $stmt = $conn->prepare("INSERT INTO user_tickets 
+                                      (`user_id`, `ticket_id`, `status`) 
+                                      VALUES (?, ?, 'CART')");
 
         if ($stmt) {
             // assign ticket to the user with status CART
             $stmt->bind_param('ii', $user_id, $ticket_id);
             $stmt->execute();
-            $sql = "UPDATE tickets SET tickets.status = 'CART' WHERE tickets.id = ?";
+            $sql = "UPDATE tickets 
+                    SET tickets.status = 'CART' 
+                    WHERE tickets.id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('i', $ticket_id);
             $stmt->execute();

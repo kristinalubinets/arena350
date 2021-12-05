@@ -41,9 +41,6 @@ function login($username, $password, $connection)
                         $_SESSION["username"] = $username;
 
                         $succeeded = true;
-
-                        // Redirect user to welcome page
-                        header("location: home.php");
                     }
                 }
             }
@@ -57,6 +54,38 @@ function login($username, $password, $connection)
         echo htmlspecialchars($connection->error);
     }
     return $succeeded;
+}
+
+function load_cart_into_session($conn)
+{
+    $sql = "SELECT ticket_id, event_id
+        FROM user_tickets
+        JOIN tickets ON user_tickets.ticket_id = tickets.id
+        WHERE user_id = ?
+        AND tickets.status = 'CART'";
+
+    // query tickets in user's cart
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $_SESSION['id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+    $conn->close();
+
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = array();
+    }
+
+    // sync tickets to session cart
+    foreach ($result as $row) {
+        $event_id = $row['event_id'];
+        $ticket_id = $row['ticket_id'];
+        if (!isset($_SESSION['cart'][$event_id])) {
+            $_SESSION['cart'][$event_id] = array($ticket_id);
+        } else {
+            array_push($_SESSION['cart'][$event_id], $ticket_id);
+        }
+    }
 }
 
 
@@ -87,8 +116,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $login_succeeded = login($username, $password, $conn);
         if (!$login_succeeded) {
             $login_err = "Invalid username or password";
+        } else {
+            // populate session cart for user
+            load_cart_into_session($conn);
+
+            // Redirect user to welcome page
+            header("location: home.php");
         }
     }
+
     // Close connection
     mysqli_close($conn);
 }
@@ -99,12 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <?php include("head.php") ?>
 </head>
-<nav class="topnav">
-    <a class="nav-item nav-link active" href="#">Home</a>
-    <a class="nav-item nav-link" href="#">IDK</a>
-    <a class="nav-item nav-link" href="#">Link</a>
-    <a class="nav-item nav-link disabled" href="#">About</a>
-</nav>
+<?php include("navbar.php") ?>
 <body>
 <div class="container">
     <div class="grid-container">

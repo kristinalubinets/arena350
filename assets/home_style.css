@@ -5,30 +5,6 @@ body {
     background: ghostwhite;
 }
 
-/* Add a black background color to the top navigation */
-.topnav {
-    background-color: lightslategray;
-    display: flex;
-}
-/* Style the links inside the navigation bar */
-.topnav a {
-    color: black;
-    text-align: center;
-    padding: 10px 14px;
-    text-decoration: none;
-    font-size: 17px;
-}
-/* Change the color of links on hover */
-.topnav a:hover {
-    background-color: ghostwhite;
-    color: #005f5f;
-    cursor: pointer;
-}
-/* Add a color to the active/current link */
-.topnav .active {
-    background-color: #005f5f;
-    color: white;
-}
 
 .btn {
     background-color: #005f5f;
@@ -62,7 +38,7 @@ body {
 }
 
 .container {
-    margin-top: 16px;
+    margin-top: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
