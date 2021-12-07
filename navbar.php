@@ -10,12 +10,15 @@
             }
         }
     }
+    $is_logged_in = isset($_SESSION['loggedin']);
 ?>
 
 <nav class="topnav">
     <a href="/arena350/home.php">Home</a>
     <a href="#">Profile</a>
     <a href="#">About</a>
+
+    <?php if ($is_logged_in) : ?>
 
     <div class="navbar-end">
         <a class="cart-link" href="/arena350/cart.php">
@@ -68,8 +71,7 @@
 </svg>
             </svg>
         </a>
-        <?php if (!empty($_SESSION["loggedin"])) : ?>
-            <a href="logout.php" class="logout">Logout</a>
-        <?php endif; ?>
+        <a href="logout.php" class="logout">Logout</a>
     </div>
+    <?php endif; ?>
 </nav>

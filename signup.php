@@ -21,8 +21,7 @@ if (isset($_POST['signup']) && !empty($_POST['signup'])) {
 
 
     if ($query = mysqli_query($conn, "INSERT INTO users(username, password) VALUES('" . $email . "', '" . md5($password) . "')")) {
-        echo "Success"; // redirect on success
-        $_POST = array();
+        header ( "location: home.php");
         exit;
     } else {
         echo "Failed to create username: " . mysqli_error($conn);
@@ -36,14 +35,10 @@ mysqli_close($conn);
 
 <!DOCTYPE html>
 <html lang="en">
-<?php include('head.php') ?>
-
-<nav class="topnav">
-    <a href="#">Home</a>
-    <a href="#">IDK</a>
-    <a href="#">Link</a>
-    <a href="#">About</a>
-</nav>
+<head>
+    <?php include('head.php') ?>
+</head>
+<?php include('navbar.php') ?>
 
 <body>
 <div class="container">

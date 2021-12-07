@@ -60,50 +60,66 @@ $total = array_reduce($tickets, function ($acc, $ticket) {
 <head>
     <?php include("head.php") ?>
     <link rel="stylesheet" type="text/css" href="assets/cart.css"/>
+
 </head>
 <?php include("navbar.php") ?>
 
 <body>
-<div class="grid-container">
-    <h3>
-        Tickets in your cart
-    </h3>
-    <table>
-        <thead>
-        <tr>
-            <td>Event</td>
-            <td>Price</td>
-            <td>Added to Cart</td>
-            <td></td>
-        </tr>
-        </thead>
-        <tbody>
-        <?php if (empty($tickets)): ?>
-            <td>There are no tickets in your cart :(</td>
-        <?php else: ?>
-            <?php foreach ($tickets as $ticket): ?>
-                <tr>
-                    <td>
-                        <a href="<?php echo htmlspecialchars("event.php?name={$ticket['event_name']}")?>">
-                            <?= $ticket['event_name'] ?>
-                        </a>
-                    </td>
-                    <td><?= $ticket['price'] ?></td>
-                    <td>
-                        <?= date('g:i A, F d, Y', strtotime($ticket['last_added_to_cart'])); ?>
-                    </td>
-                    <td>
-                        <a href="<?php echo("remove_from_cart.php?event={$ticket['event_id']}&ticket={$ticket['ticket_id']}") ?>"
-                           class="close-btn small button alert" style="font-weight: 700">Remove</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        <?php endif; ?>
-        </tbody>
-    </table>
-    <div class="clearfix">
-        <div class="float-right">
-            <div class="total">Total: <strong>$<?= number_format((float)$total, 2, '.', '') ?></strong></div>
+<div class="container">
+    <div class="grid-container">
+        <h3>
+            Tickets in your cart
+        </h3>
+        <table>
+            <thead>
+            <tr>
+                <td>Event</td>
+                <td>Price</td>
+                <td>Added to Cart</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <?php if (empty($tickets)): ?>
+                <td>There are no tickets in your cart :(</td>
+            <?php else: ?>
+                <?php foreach ($tickets as $ticket): ?>
+                    <tr>
+                        <td>
+                            <a href="<?php echo htmlspecialchars("event.php?name={$ticket['event_name']}") ?>">
+                                <?= $ticket['event_name'] ?>
+                            </a>
+                        </td>
+                        <td><?= $ticket['price'] ?></td>
+                        <td>
+                            <?= date('g:i A, F d, Y', strtotime($ticket['last_added_to_cart'])); ?>
+                        </td>
+                        <td>
+                            <a href="<?php echo("remove_from_cart.php?event={$ticket['event_id']}&ticket={$ticket['ticket_id']}") ?>"
+                               class="close-btn small button alert" style="font-weight: 700">Remove</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            </tbody>
+        </table>
+        <div class="clearfix">
+            <div class="float-right">
+                <div class="total">Total: <strong>$<?= number_format((float)$total, 2, '.', '') ?></strong></div>
+            </div>
+        </div>
+        <hr>
+        <div class="cart-footer grid-x">
+            <div class="cell medium-10">
+                <a href="empty_cart.php" class="btn">
+                    Empty Cart
+                </a>
+            </div>
+            <div class="cell medium-2 order-button">
+                <a href="place_order.php" class="btn">
+                    Place Order
+                </a>
+            </div>
         </div>
     </div>
 </div>

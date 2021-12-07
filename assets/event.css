@@ -6,3 +6,11 @@
     left: -8px;
     top: -10px;
 }
+.card-divider h3{
+    margin-top: 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+
+}
+p {
+    font-family: "Noto Serif", "DejaVu Serif", serif;
+}

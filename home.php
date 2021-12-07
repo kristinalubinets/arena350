@@ -40,12 +40,28 @@ foreach ($result as $row) {
 
 <html>
 <head>
+
+
     <?php include('head.php') ?>
 </head>
 <body>
 <?php include('navbar.php') ?>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
 
 <div class="container">
+
+
+    <div class="grid-y">
+        <div class="cell medium-6 large-4">
+            <div class="container2">
+                <img src="./assets/images/ballfixed.png">
+                <div class="text-block">
+                    <h2>The Sports Arena  350</h2>
+                </div>
+            </div>
+        </div>
+
+
     <div class="grid-container">
         <div>
             <h3>
@@ -53,10 +69,8 @@ foreach ($result as $row) {
                 <?php echo htmlspecialchars($_SESSION["username"]); ?>
             </h3>
         </div>
-        <div class="grid-x">
-            <div class="cell medium-6">
-                <img src="./assets/images/arena_home.png">
-            </div>
+
+
             <div class="cell medium-6">
                 <table>
                     <thead>
