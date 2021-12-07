@@ -52,6 +52,7 @@ if (isset($_POST['event_id']) && !is_null($_POST['event_id']) && !isset($_POST['
         // with the values as another array of the ticket_id for that event in the $_SESSION
         array_push($_SESSION['cart'][$_POST['event_id']], $ticket_id);
     }
+    $conn->close();
     // redirect to cart page with cart items
     header("location: cart.php");
     exit;

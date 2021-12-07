@@ -40,8 +40,6 @@ foreach ($result as $row) {
 
 <html>
 <head>
-
-
     <?php include('head.php') ?>
 </head>
 <body>

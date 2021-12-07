@@ -15,11 +15,10 @@
 
 <nav class="topnav">
     <a href="/arena350/home.php">Home</a>
-    <a href="#">Profile</a>
+    <a href="/arena350/profile.php">Profile</a>
     <a href="#">About</a>
 
     <?php if ($is_logged_in) : ?>
-
     <div class="navbar-end">
         <a class="cart-link" href="/arena350/cart.php">
 
