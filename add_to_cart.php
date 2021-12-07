@@ -8,14 +8,15 @@ if (empty($_SESSION["loggedin"]))
 // submit add to cart
 // check for event id of tickets
 if (isset($_POST['event_id']) && !is_null($_POST['event_id']) && !isset($_POST['ticket_id'])) {
-    $stmt = $conn->prepare("SELECT id FROM tickets WHERE event_id = ? AND status='AVAILABLE' LIMIT 1");
+    $stmt = $conn->prepare("SELECT id FROM tickets 
+                                    WHERE event_id = ? 
+                                    AND status='AVAILABLE' LIMIT 1");
 
     $stmt->bind_param('i', $_POST['event_id']);
     $stmt->execute();
     $result = $stmt->get_result();
     // get all of the rows from query
     $row = $result->fetch_row();
-    // $row[0] because we gonna get the number of rows by 'count(*)' in query
     $ticket_id = $row[0];
 
     // check that the amount of tickets > 0, the user allowed to get only one ticket

@@ -4,15 +4,10 @@ require("db.php");
 if (empty($_SESSION["loggedin"]))
     header("location: login.php");
 
-// fetch event metadata on initial page load
-$queries = array();
-// QUERY_STRING everything after " ? " in URL
-// "parse"- to break a string into key value pairs
-parse_str($_SERVER['QUERY_STRING'], $queries);
 $event_id = null;
 
 // check if 'name' (event name) exists in the query string of the url
-if (!empty($queries['name'])) {
+if (!empty($_GET['name'])) {
     // prepare a SQL query that looks at the events table
     // for a event row with name equal to the event name
     $sql = 'SELECT id, name, description, image_url FROM events WHERE name = ?';
@@ -23,7 +18,7 @@ if (!empty($queries['name'])) {
     // in the prepared statement
     $stmt->bind_param('s', $param_event_name);
     // assign $param_event_name variable to the query string 'name' parameter
-    $param_event_name = $queries['name'];
+    $param_event_name = $_GET['name'];
 
     $stmt->execute();
     // $result return all the rows from the query
@@ -62,20 +57,20 @@ if ($data) : ?>
 <div class="container">
     <div class="grid-container">
         <?php foreach ($data
-        as $row): ?>
+        as $event): ?>
         <div class="card">
             <div class="card-divider">
-                <h3><?= $row['name'] ?></h3>
+                <h3><?= $event['name'] ?></h3>
             </div>
             <div class="grid-x">
                 <div class="card-section cell medium-6">
-                    <img src="<?php echo htmlspecialchars($row['image_url']) ?>"/>
+                    <img src="<?php echo htmlspecialchars($event['image_url']) ?>"/>
                 </div>
                 <div class="card-section cell medium-6">
-                    <p><?= $row['description'] ?></p>
+                    <p><?= $event['description'] ?></p>
                     <!-- fill out $_POST global variable with event id at $_POST['event_id'] -->
                     <form action="add_to_cart.php" method="post">
-                        <input type="hidden" name="event_id" value="<?= $event_id ?>">
+                        <input type="hidden" name="event_id" value="<?=$event['id']?>">
                         <input type="submit" value="Add To Cart" class="btn">
                     </form>
                 </div>

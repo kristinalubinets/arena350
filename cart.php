@@ -16,6 +16,7 @@ if (isset($_SESSION['cart'])) {
     foreach ($_SESSION['cart'] as $event_id => $ticket_ids) {
         $tickets_to_fetch = array_merge($tickets_to_fetch, $ticket_ids);
     }
+
     if (!empty($tickets_to_fetch)) {
         // return unique set of tickets
         $tickets_to_fetch = array_unique($tickets_to_fetch);
@@ -109,18 +110,20 @@ $total = array_reduce($tickets, function ($acc, $ticket) {
             </div>
         </div>
         <hr>
-        <div class="cart-footer grid-x">
-            <div class="cell medium-10">
-                <a href="empty_cart.php" class="btn">
-                    Empty Cart
-                </a>
+        <?php if(!empty($tickets)) : ?>
+            <div class="cart-footer grid-x">
+                <div class="cell medium-8">
+                    <a href="empty_cart.php" class="btn">
+                        Empty Cart
+                    </a>
+                </div>
+                <div class="cell medium-4 order-button">
+                    <a href="place_order.php" class="btn">
+                        Place Order
+                    </a>
+                </div>
             </div>
-            <div class="cell medium-2 order-button">
-                <a href="place_order.php" class="btn">
-                    Place Order
-                </a>
-            </div>
-        </div>
+        <?php endif; ?>
     </div>
 </div>
 </body>

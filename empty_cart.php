@@ -16,7 +16,7 @@ $result = $stmt->get_result();
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 $ticket_ids = array_map(function ($row) {
-    return $row['id'];
+    return $row['ticket_id'];
 }, $rows);
 
 // delete tickets in user cart
