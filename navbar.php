@@ -16,7 +16,7 @@
 <nav class="topnav">
     <a href="/arena350/home.php">Home</a>
     <a href="/arena350/profile.php">Profile</a>
-    <a href="#">About</a>
+    <a href="/arena350/about.php">About</a>
 
     <?php if ($is_logged_in) : ?>
     <div class="navbar-end">

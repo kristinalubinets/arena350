@@ -12,19 +12,19 @@ if (isset($_POST['signup']) && !empty($_POST['signup'])) {
     }
 
     if (!empty($_POST['password']) && strlen($password) < 6) {
-        $password_error = "Password must be minimum of 6 characters";
+        $password_error = "Password must be minimum of 6 characters!";
     }
 
     if (!empty($_POST['password']) && !empty($_POST['cpassword']) && $password != $cpassword) {
-        $cpassword_error = "Password and Confirm Password doesn't match";
+        $cpassword_error = "ERROR! Password and Confirm Password does not match!";
     }
 
-
-    if ($query = mysqli_query($conn, "INSERT INTO users(username, password) VALUES('" . $email . "', '" . md5($password) . "')")) {
+    if (!$email_error && !$password_error && !$cpassword_error ) {
+        $query = mysqli_query($conn, "INSERT INTO users(username, password) VALUES('" . $email . "', '" . md5($password) . "')") ;
         header ( "location: home.php");
         exit;
     } else {
-        echo "Failed to create username: " . mysqli_error($conn);
+        echo "ERROR! Failed to create username!". mysqli_error($conn);
     }
 }
 
@@ -65,7 +65,7 @@ mysqli_close($conn);
             <div class="medium-6 cell">
                 <input type="submit" class="btn" name="signup" value="submit">
                 Already have a account?
-                <a href="login.php" class="btn">Login</a>
+                <a href="login.php" class="btn">login</a>
             </div>
         </form>
     </div>

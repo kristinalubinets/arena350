@@ -29,7 +29,7 @@ if (empty($_SESSION["loggedin"]))
 require("db.php");
 
 // fetch all the events
-$sql = 'SELECT name, date FROM events ORDER BY date DESC LIMIT 5';
+$sql = 'SELECT name, date FROM events ORDER BY date ASC LIMIT 5';
 
 $result = $conn->query($sql);
 $events = array();
