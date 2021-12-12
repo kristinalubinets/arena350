@@ -45,7 +45,7 @@ body {
     position: relative;
 }
 .text-block h2 {
-    font-size: 60px;
+    font-size: 50px;
     margin-bottom: 20px;
     margin-left: 20px;
     font-family: "Audiowide", sans-serif !important;
@@ -82,5 +82,60 @@ table tr {
 /*}*/
 svg {
     height: 100%;
+}
+
+.text-block p {
+    border-radius: 10px;
+    font-size: 20px;
+    margin-bottom: 300px;
+    margin-left: 400px;
+    margin-right: 400px;
+    font-family: "Times New Roman";
+    position: absolute;
+
+    box-shadow: inset 0 0 2000px #007d7d;
+
+    backdrop-filter: blur(5px);
+    bottom: 30px;
+    left: 30px;
+    color: white;
+}
+.text-block p1 {
+    font-size: 20px;
+    margin-bottom: 95px;
+    margin-left: 500px;
+    font-family: "Audiowide", sans-serif;
+    position: absolute;
+    backdrop-filter: blur(10px);
+    bottom: 30px;
+    left: 30px;
+    color: white;
+}
+.text-block p2 {
+    font-size: 20px;
+    margin-bottom: 50px;
+    margin-left: 500px;
+    font-family: "Audiowide", sans-serif;
+    position: absolute;
+    backdrop-filter: blur(5px);
+    bottom: 30px;
+    left: 30px;
+    color: white;
+}
+.text-block h4 {
+    font-size: 35px;
+    margin-bottom: 100px;
+    margin-left: 200px;
+    font-family: "Audiowide", sans-serif;
+    position: absolute;
+    backdrop-filter: blur(5px);
+    bottom: 30px;
+    left: 30px;
+    color: white;
+}
+.text-danger {
+    background-color: yellow;
+    color:red; !important
+    text-align:center;
 }
 
